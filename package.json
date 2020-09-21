@@ -4,7 +4,8 @@
   "description": "Simple & easy to use chat app",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [
     "nodejs",
@@ -14,5 +15,14 @@
     "mongooose"
   ],
   "author": "Pranjal Alone (https://github.com/ppalone)",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.6",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "socket.io": "^2.3.0"
+  }
 }
