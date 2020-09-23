@@ -1,4 +1,5 @@
-<%- include ('./partials/header') %>
+<%- include ('./partials/header') %> 
+<%- include ('./partials/navbar') %>
 <div class="container">
   <div class="main">
     <div class="welcome-message">
@@ -7,18 +8,17 @@
     </div>
     <div class="content">
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit minima
-        excepturi accusantium hic, et quia voluptatem officiis quis veniam
-        quisquam officia labore iure eligendi recusandae minus dolore animi ut.
-        Natus.
+        A simple and easy to use chat application. Chat with other developers,
+        collaborate on projects, discuss issues and bugs, share your projects
+        and contribute to the world of open source.
       </p>
     </div>
     <div class="options">
       <div>
-        <button>Login</button>
+        <button onclick="location.href='/login'">Login</button>
       </div>
       <div>
-        <button>Signup</button>
+        <button onclick="location.href='/signup'">Signup</button>
       </div>
     </div>
   </div>
