@@ -1,0 +1,46 @@
+<%- include ('./partials/header') %> <%- include ('./partials/navbar') %>
+
+<div class="container">
+  <div class="login-div">
+    <form action="/register" method="POST">
+      <h2>REGISTER</h2>
+      <div>
+        <label for="email">Username</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="username"
+          placeholder="username"
+          autocomplete="off"
+        />
+      </div>
+      <div>
+        <label for="email">Email</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="email"
+          placeholder="example@example.com"
+          autocomplete="off"
+        />
+      </div>
+      <div>
+        <label for="password">Password</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          name="password"
+          placeholder="password"
+          autocomplete="off"
+        />
+      </div>
+      <div>
+        <button type="submit">SIGN UP</button>
+      </div>
+    </form>
+  </div>
+</div>
+<%- include ('./partials/footer') %>

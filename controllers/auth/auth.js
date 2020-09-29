@@ -1,8 +1,8 @@
 module.exports = {
   getLoginPage: (req, res) => {
-    res.send('Login Page');
+    res.render('login');
   },
   getSignupPage: (req, res) => {
-    res.send('Signup Page');
+    res.render('signup');
   },
 };
