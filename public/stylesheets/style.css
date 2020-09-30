@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -8,10 +8,10 @@
 
 :root {
   --bg-primary: #ffffff;
-  --font-family: 'Noto Sans JP', sans-serif;
+  --font-family: 'PT Serif', sans-serif;
   --text-primary: #000000;
   --text-secondary: #3d3d3d;
-  --special: #8f7fe9;
+  --special: #8575dd;
   --nav-height: 50px;
 }
 
@@ -34,6 +34,15 @@ button {
   border-radius: 20px;
   cursor: pointer;
   min-width: 100px;
+}
+
+input {
+  font-family: var(--font-family);
+}
+
+a {
+  color: var(--special);
+  text-decoration: none;
 }
 
 .container {
@@ -86,6 +95,7 @@ button {
   margin: 10px;
 }
 
+/* Login and Register form */
 form {
   width: 90%;
   max-width: 400px;
@@ -96,10 +106,14 @@ form > div {
   padding: 6px 0;
 }
 
+form > div:nth-last-child(1) {
+  text-align: right;
+}
+
 form input {
   height: 40px;
   width: 100%;
-  padding: 5px 10px;
+  padding: 5px;
   font-size: 16px;
   outline: none;
   border: 1px solid var(--text-secondary);
