@@ -125,6 +125,64 @@ form button {
   border-radius: 0%;
 }
 
+/* Chat UI */
+.chat-header {
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--text-secondary);
+}
+
+.chat-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.chat-div {
+  flex: 2;
+  max-height: -webkit-max-content;
+  max-height: -moz-max-content;
+  max-height: max-content;
+  overflow-y: scroll;
+}
+
+/* Custom scrollbar */
+.chat-div::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-div ul {
+  list-style: none;
+}
+
+.message {
+  padding: 5px 0;
+}
+
+.chat-form {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  /* Override the form max width */
+  max-width: 100%;
+}
+
+.chat-ip {
+  flex: 2;
+}
+
+.chat-ip input {
+  width: 100%;
+  height: 40px;
+}
+
+.chat-form button {
+  height: 40px;
+  padding: 0 10px;
+  min-width: auto;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .container {
