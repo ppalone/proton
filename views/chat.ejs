@@ -6,32 +6,7 @@
       <h2>#chat</h2>
     </div>
     <div class="chat-div">
-      <ul>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-        <li class="message">Learn Typescript</li>
-      </ul>
+      <ul></ul>
     </div>
     <div class="chat-form-div">
       <form class="chat-form">
@@ -45,5 +20,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  // DOM Elements
+  const chatForm = document.querySelector('.chat-form');
+  const messageList = document.querySelector('.chat-div ul');
+  const chatScreen = document.querySelector('.chat-div');
+  const chatInput = document.querySelector('.chat-ip input');
+
+  chatForm.onsubmit = (e) => {
+    e.preventDefault();
+    let ele = document.createElement('li');
+    ele.className = 'message';
+    if (!chatInput.value.trim()) {
+      return;
+    }
+    ele.innerText = chatInput.value;
+    messageList.appendChild(ele);
+    chatInput.value = '';
+    chatScreen.scrollTo(0, chatScreen.scrollHeight);
+    return false;
+  };
+</script>
 
 <%- include ('partials/footer') %>
