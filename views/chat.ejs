@@ -1,9 +1,15 @@
 <%- include ('partials/header') %>
 
-<div class="container">
+<div class="chat-container">
   <div class="chat-screen">
     <div class="chat-header">
-      <h2>#chat</h2>
+      <div>
+        <h2>#chat</h2>
+      </div>
+      <div class="spacer"></div>
+      <div>
+        <button onclick="location.href='/logout'">Logout</button>
+      </div>
     </div>
     <div class="chat-div">
       <ul></ul>
@@ -11,7 +17,12 @@
     <div class="chat-form-div">
       <form class="chat-form">
         <div class="chat-ip">
-          <input type="text" name="chat" placeholder="Say Hi!" />
+          <input
+            type="text"
+            name="chat"
+            placeholder="Say Hi!"
+            autocomplete="off"
+          />
         </div>
         <div>
           <button type="submit">SEND</button>
@@ -35,10 +46,11 @@
     if (!chatInput.value.trim()) {
       return;
     }
-    ele.innerText = chatInput.value;
+    ele.innerText = chatInput.value.trim();
     messageList.appendChild(ele);
     chatInput.value = '';
     chatScreen.scrollTo(0, chatScreen.scrollHeight);
+    chatInput.focus();
     return false;
   };
 </script>

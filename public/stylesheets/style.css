@@ -15,6 +15,11 @@
   --nav-height: 50px;
 }
 
+html,
+body {
+  height: 100%;
+}
+
 body {
   background-color: #ffffff;
 }
@@ -38,6 +43,8 @@ button {
 
 input {
   font-family: var(--font-family);
+  font-size: 16px;
+  outline: none;
 }
 
 a {
@@ -46,6 +53,12 @@ a {
 }
 
 .container {
+  width: 60%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.nav-container {
   width: 60%;
   margin: 0 auto;
 }
@@ -63,7 +76,8 @@ a {
 
 .main {
   width: 100%;
-  margin-top: 10%;
+  /* margin-top: 10%; */
+  padding-top: 10%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -96,21 +110,23 @@ a {
 }
 
 /* Login and Register form */
-form {
+.auth-form {
   width: 90%;
   max-width: 400px;
-  margin: 25% auto 0 auto;
+  /* margin: 25% auto 0 auto; */
+  padding: 20% 0;
+  margin: 0 auto;
 }
 
-form > div {
+.auth-form > div {
   padding: 6px 0;
 }
 
-form > div:nth-last-child(1) {
+.auth-form > div:nth-last-child(1) {
   text-align: right;
 }
 
-form input {
+.auth-form input {
   height: 40px;
   width: 100%;
   padding: 5px;
@@ -120,23 +136,36 @@ form input {
   /* border-radius: 20px; */
 }
 
-form button {
+.auth-form button {
   width: 100%;
   border-radius: 0%;
 }
 
 /* Chat UI */
+.chat-container {
+  width: 60%;
+  height: 100%;
+  margin: 0 auto;
+}
+
 .chat-header {
+  display: flex;
+  align-items: center;
   height: var(--nav-height);
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--text-secondary);
 }
 
+.spacer {
+  flex: 2;
+}
+
 .chat-screen {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: calc(100vh - 56px); */
+  height: 100%;
 }
 
 .chat-div {
@@ -158,6 +187,14 @@ form button {
 
 .message {
   padding: 5px 0;
+  animation: fly-in 300ms ease-in-out;
+}
+
+.chat-form-div {
+  height: var(--nav-height);
+  display: flex;
+  /* align-items: center; */
+  padding-bottom: 10px;
 }
 
 .chat-form {
@@ -165,6 +202,7 @@ form button {
   width: 100%;
   margin: 0;
   /* Override the form max width */
+  padding: 0;
   max-width: 100%;
 }
 
@@ -172,25 +210,47 @@ form button {
   flex: 2;
 }
 
+.chat-form > div {
+  padding: 0;
+}
+
 .chat-ip input {
   width: 100%;
   height: 40px;
+  padding: 5px;
+  border: 1px solid var(--text-secondary);
 }
 
 .chat-form button {
   height: 40px;
   padding: 0 10px;
+  border-radius: 0%;
   min-width: auto;
 }
 
 /* Media Queries */
 @media (max-width: 768px) {
-  .container {
-    width: 90%;
+  .container,
+  .nav-container,
+  .chat-container {
+    width: 95%;
   }
   .logo svg {
     width: 50%;
     min-width: 100px;
     height: auto;
+  }
+}
+
+/* Chat message animation */
+/* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
+@keyframes fly-in {
+  0% {
+    transform: scale(0.85) translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
   }
 }
