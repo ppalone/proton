@@ -7,6 +7,9 @@
         <h2>#chat</h2>
       </div>
       <div class="spacer"></div>
+      <div style="padding: 0 10px">
+        <button class="show-users">Users</button>
+      </div>
       <div>
         <button onclick="location.href='/logout'">Logout</button>
       </div>
@@ -32,27 +35,87 @@
   </div>
 </div>
 
-<script>
-  // DOM Elements
-  const chatForm = document.querySelector('.chat-form');
-  const messageList = document.querySelector('.chat-div ul');
-  const chatScreen = document.querySelector('.chat-div');
-  const chatInput = document.querySelector('.chat-ip input');
+<div class="model-wrapper">
+  <div class="model">
+    <div class="model-header">
+      <div>
+        <h3>Users</h3>
+      </div>
+      <div class="users-list">
+        <ul>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+          <li>Pranjal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
 
-  chatForm.onsubmit = (e) => {
-    e.preventDefault();
-    let ele = document.createElement('li');
-    ele.className = 'message';
-    if (!chatInput.value.trim()) {
-      return;
+  <script>
+    // DOM Elements
+    const chatForm = document.querySelector('.chat-form');
+    const messageList = document.querySelector('.chat-div ul');
+    const chatScreen = document.querySelector('.chat-div');
+    const chatInput = document.querySelector('.chat-ip input');
+    const modelWrapper = document.querySelector('.model-wrapper');
+    const model = document.querySelector('.model');
+    const showUserBtn = document.querySelector('.show-users');
+
+    // Functions
+    const createChatMessage = (message) => {
+      let ele = document.createElement('li');
+      ele.className = 'message';
+      ele.innerText = message;
+      return ele;
+    };
+
+    // Events
+    chatForm.onsubmit = (e) => {
+      e.preventDefault();
+
+      // Check if the message is empty
+      if (!chatInput.value.trim()) {
+        return;
+      }
+
+      // append to messages
+      messageList.appendChild(createChatMessage(chatInput.value.trim()));
+      // clear chat input
+      chatInput.value = '';
+      // scroll down
+      chatScreen.scrollTo(0, chatScreen.scrollHeight);
+      // chatInput.focus();
+      return false;
+    };
+
+    showUserBtn.onclick = () => {
+      modelWrapper.classList.add('model-active');
     }
-    ele.innerText = chatInput.value.trim();
-    messageList.appendChild(ele);
-    chatInput.value = '';
-    chatScreen.scrollTo(0, chatScreen.scrollHeight);
-    chatInput.focus();
-    return false;
-  };
-</script>
 
-<%- include ('partials/footer') %>
+    modelWrapper.onclick = () => {
+      // console.log('click');
+      modelWrapper.classList.remove('model-active');
+    };
+  </script>
+
+  <%- include ('partials/footer') %>
+</div>

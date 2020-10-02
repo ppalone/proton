@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
 
 * {
   margin: 0;
@@ -8,7 +8,7 @@
 
 :root {
   --bg-primary: #ffffff;
-  --font-family: 'PT Serif', sans-serif;
+  --font-family: 'Fira Code', sans-serif;
   --text-primary: #000000;
   --text-secondary: #3d3d3d;
   --special: #8575dd;
@@ -50,6 +50,10 @@ input {
 a {
   color: var(--special);
   text-decoration: none;
+}
+
+ul {
+  list-style: none;
 }
 
 .container {
@@ -187,6 +191,7 @@ a {
 
 .message {
   padding: 5px 0;
+  -webkit-animation: fly-in 300ms ease-in-out;
   animation: fly-in 300ms ease-in-out;
 }
 
@@ -228,12 +233,61 @@ a {
   min-width: auto;
 }
 
+/* Model */
+.model-wrapper {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+
+.model-active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.model {
+  position: relative;
+  z-index: 2;
+  width: 60%;
+  max-width: 400px;
+  height: 80%;
+  max-height: 400px;
+  background-color: var(--bg-primary);
+  padding: 10px;
+  box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
+}
+
+.model-header {
+  /* height: 30px; */
+  padding-bottom: 5px;
+}
+
+.users-list {
+  /* max-height: calc(100% - 30px); */
+  /* overflow-y: scroll; */
+  max-height: 360px;
+  overflow-y: scroll;
+}
+
+.users-list::-webkit-scrollbar {
+  display: none;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .container,
   .nav-container,
   .chat-container {
     width: 95%;
+  }
+  .model {
+    width: 90%;
   }
   .logo svg {
     width: 50%;
@@ -244,6 +298,16 @@ a {
 
 /* Chat message animation */
 /* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
+@-webkit-keyframes fly-in {
+  0% {
+    transform: scale(0.85) translateY(10%);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
 @keyframes fly-in {
   0% {
     transform: scale(0.85) translateY(10%);
