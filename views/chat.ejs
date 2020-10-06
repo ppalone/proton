@@ -68,6 +68,19 @@
     const usersList = document.querySelector('.users-list ul');
     let currentUser;
 
+    // Custom Function to escape tags
+    // https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
+    String.prototype.escape = function() {
+    var tagsToReplace = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;'
+    };
+    return this.replace(/[&<>]/g, function(tag) {
+        return tagsToReplace[tag] || tag;
+    });
+};
+
     // Scroll to the bottom
     chatScreen.scrollTo(0, chatScreen.scrollHeight);
 
@@ -83,6 +96,7 @@
     const createChatMessage = ({username, message}) => {
       let ele = document.createElement('li');
       ele.className = 'message';
+      message = message.escape();
       ele.innerHTML = `<strong>${username}</strong> - ${message}`;
       return ele;
     };
