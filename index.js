@@ -28,9 +28,6 @@ const sessionMiddleware = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-  },
 });
 
 // Connect to MongoDB
