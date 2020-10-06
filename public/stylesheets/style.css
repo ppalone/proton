@@ -3,6 +3,7 @@
 * {
   margin: 0;
   padding: 0;
+  -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -73,7 +74,11 @@ ul {
   left: 0;
   width: 100%;
   height: var(--nav-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   background-color: var(--bg-primary);
 }
@@ -82,9 +87,18 @@ ul {
   width: 100%;
   /* margin-top: 10%; */
   padding-top: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   text-align: center;
 }
@@ -105,6 +119,8 @@ ul {
 }
 
 .options {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   margin-top: 20px;
 }
@@ -153,7 +169,11 @@ ul {
 }
 
 .chat-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   height: var(--nav-height);
   display: flex;
@@ -162,17 +182,26 @@ ul {
 }
 
 .spacer {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
 }
 
 .chat-screen {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   /* height: calc(100vh - 56px); */
   height: 100%;
 }
 
 .chat-div {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
   max-height: -webkit-max-content;
   max-height: -moz-max-content;
@@ -197,12 +226,16 @@ ul {
 
 .chat-form-div {
   height: var(--nav-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   /* align-items: center; */
   padding-bottom: 10px;
 }
 
 .chat-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   margin: 0;
@@ -212,6 +245,8 @@ ul {
 }
 
 .chat-ip {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
 }
 
@@ -246,8 +281,14 @@ ul {
 }
 
 .model-active {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
 }
 
@@ -260,6 +301,7 @@ ul {
   max-height: 400px;
   background-color: var(--bg-primary);
   padding: 10px;
+  -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
   box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.2);
 }
 
@@ -273,6 +315,7 @@ ul {
   /* overflow-y: scroll; */
   max-height: 360px;
   overflow-y: scroll;
+  scrollbar-width: 0px;
 }
 
 .users-list::-webkit-scrollbar {
@@ -300,20 +343,24 @@ ul {
 /* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
 @-webkit-keyframes fly-in {
   0% {
+    -webkit-transform: scale(0.85) translateY(10%);
     transform: scale(0.85) translateY(10%);
     opacity: 0;
   }
   100% {
+    -webkit-transform: scale(1) translateY(0);
     transform: scale(1) translateY(0);
     opacity: 1;
   }
 }
 @keyframes fly-in {
   0% {
+    -webkit-transform: scale(0.85) translateY(10%);
     transform: scale(0.85) translateY(10%);
     opacity: 0;
   }
   100% {
+    -webkit-transform: scale(1) translateY(0);
     transform: scale(1) translateY(0);
     opacity: 1;
   }

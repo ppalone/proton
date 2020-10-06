@@ -1,2 +1,5 @@
 # npm dependencies
 node_modules
+
+# environmental variables
+.env

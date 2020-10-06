@@ -15,7 +15,11 @@
       </div>
     </div>
     <div class="chat-div">
-      <ul></ul>
+      <ul>
+        <% messages.forEach(message => { %>
+          <li class="message"><%= message.by.username %> - <%= message.text %></li>
+        <% }) %>
+      </ul>
     </div>
     <div class="chat-form-div">
       <form class="chat-form">
@@ -39,39 +43,21 @@
   <div class="model">
     <div class="model-header">
       <div>
-        <h3>Users</h3>
+        <h3>Active users</h3>
       </div>
       <div class="users-list">
         <ul>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
-          <li>Pranjal</li>
+          <!-- <li>Active users will be shown here!</li> -->
         </ul>
       </div>
     </div>
   </div>
 </div>
 
+  <script src="/socket.io/socket.io.js"></script>
   <script>
     // DOM Elements
+    const socket = io();
     const chatForm = document.querySelector('.chat-form');
     const messageList = document.querySelector('.chat-div ul');
     const chatScreen = document.querySelector('.chat-div');
@@ -79,14 +65,32 @@
     const modelWrapper = document.querySelector('.model-wrapper');
     const model = document.querySelector('.model');
     const showUserBtn = document.querySelector('.show-users');
+    const usersList = document.querySelector('.users-list ul');
+    let currentUser;
+
+    // Scroll to the bottom
+    chatScreen.scrollTo(0, chatScreen.scrollHeight);
+
+    // When user joins
+    socket.emit('join');
+
+    // When users joins
+    socket.on('join', ({ username })=> {
+      currentUser = username;
+    })
 
     // Functions
-    const createChatMessage = (message) => {
+    const createChatMessage = ({username, message}) => {
       let ele = document.createElement('li');
       ele.className = 'message';
-      ele.innerText = message;
+      ele.innerText = `${username} - ${message}`;
       return ele;
     };
+
+    socket.on('message', data => {
+      // console.log(data);
+      messageList.appendChild(createChatMessage(data));
+    })
 
     // Events
     chatForm.onsubmit = (e) => {
@@ -97,8 +101,19 @@
         return;
       }
 
+      // Emit a message to server
+      socket.emit('message', chatInput.value.trim())
+
+      messageData = {
+        username: currentUser,
+        message:  chatInput.value.trim()
+      }
+
+      console.log(messageData);
+
       // append to messages
-      messageList.appendChild(createChatMessage(chatInput.value.trim()));
+      messageList.appendChild(createChatMessage(messageData));
+
       // clear chat input
       chatInput.value = '';
       // scroll down
@@ -107,8 +122,22 @@
       return false;
     };
 
-    showUserBtn.onclick = () => {
-      modelWrapper.classList.add('model-active');
+    showUserBtn.onclick = async () => {
+      try {
+        usersList.innerHTML = '';
+        let res = await fetch('/active');
+        let activeUsers = await res.json();
+
+        activeUsers.forEach(user => {
+          let li = document.createElement('li');
+          li.textContent = user;
+          usersList.appendChild(li);
+        });
+        
+        modelWrapper.classList.add('model-active');
+      } catch (error) {
+        usersList.innerHTML = "Can't get active users"; 
+      }
     }
 
     modelWrapper.onclick = () => {

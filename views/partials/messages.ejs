@@ -1,0 +1,19 @@
+<!-- Passport -->
+<% if (error != '') { %>
+<div class="error"><%= error %></div>
+<% } %>
+
+<!-- Success Message -->
+<% if (success_msg != '') { %>
+<div class="success-msg"><%= success_msg %></div>
+<% } %>
+
+<!-- Custom Error -->
+<% if (typeof(errors) !== "undefined") { %>
+<div class="error"><%= errors %></div>
+<% } %>
+
+<!-- Error Message -->
+<% if (error_msg != '') { %>
+<div class="error"><%= error_msg %></div>
+<% } %>
