@@ -61,15 +61,15 @@ module.exports = {
       let user = await newuser.save();
 
       // Everything went well
-      req.flash('success_msg', 'Registeration successful!');
-      return res.redirect('/login');
+      // req.flash('success_msg', 'Registeration successful!');
+      // return res.redirect('/login');
 
       // Login user after successful registeration
       // Heroku Error
-      // req.login(user, (err) => {
-      //   if (err) next(err);
-      //   return res.redirect('/chat');
-      // });
+      req.login(user, (err) => {
+        if (err) next(err);
+        return res.redirect('/chat');
+      });
     } catch (err) {
       console.log(err);
       res.send('Server Internal Error');
