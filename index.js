@@ -26,7 +26,7 @@ const sessionMiddleware = session({
   // Name of the session id
   name: 'proton_sid',
   secret: process.env.EXPRESS_SESSION_SECRET,
-  resave: false,
+  resave: true,
   saveUninitialized: true,
   cookie: {
     secure: process.env.NODE_ENV === 'production',
