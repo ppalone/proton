@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Piazzolla&display=swap');
 
 * {
   margin: 0;
@@ -9,7 +9,7 @@
 
 :root {
   --bg-primary: #ffffff;
-  --font-family: 'Fira Code', sans-serif;
+  --font-family: 'Piazzolla', sans-serif;
   --text-primary: #000000;
   --text-secondary: #3d3d3d;
   --special: #8575dd;
@@ -206,6 +206,8 @@ ul {
   max-height: -webkit-max-content;
   max-height: -moz-max-content;
   max-height: max-content;
+  width: 100%;
+  word-wrap: break-word;
   overflow-y: scroll;
 }
 

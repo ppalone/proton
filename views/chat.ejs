@@ -17,7 +17,7 @@
     <div class="chat-div">
       <ul>
         <% messages.forEach(message => { %>
-          <li class="message"><%= message.by.username %> - <%= message.text %></li>
+          <li class="message"><strong><%= message.by.username %></strong> - <%= message.text %></li>
         <% }) %>
       </ul>
     </div>
@@ -83,7 +83,7 @@
     const createChatMessage = ({username, message}) => {
       let ele = document.createElement('li');
       ele.className = 'message';
-      ele.innerText = `${username} - ${message}`;
+      ele.innerHTML = `<strong>${username}</strong> - ${message}`;
       return ele;
     };
 
@@ -109,7 +109,7 @@
         message:  chatInput.value.trim()
       }
 
-      console.log(messageData);
+      // console.log(messageData);
 
       // append to messages
       messageList.appendChild(createChatMessage(messageData));
