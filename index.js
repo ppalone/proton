@@ -15,7 +15,6 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 8000;
 
 const routesHandler = require('./routes/index');
-// const authMiddleware = require('./middlewares/auth');
 const passport = require('passport');
 const Message = require('./models/Message');
 

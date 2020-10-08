@@ -275,8 +275,14 @@ ul {
 .chat-form button {
   height: 40px;
   width: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
   justify-content: center;
   padding: 0;
   border-radius: 50%;
@@ -332,8 +338,6 @@ button svg {
 }
 
 .users-list {
-  /* max-height: calc(100% - 30px); */
-  /* overflow-y: scroll; */
   max-height: 360px;
   overflow-y: scroll;
   scrollbar-width: 0px;
@@ -364,8 +368,8 @@ button svg {
 /* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
 @-webkit-keyframes fly-in {
   0% {
-    -webkit-transform: scale(0.85) translateY(-10%);
-    transform: scale(0.85) translateY(-10%);
+    -webkit-transform: scale(0.85) translateY(10%);
+    transform: scale(0.85) translateY(10%);
     opacity: 0;
   }
   100% {
@@ -374,10 +378,11 @@ button svg {
     opacity: 1;
   }
 }
+
 @keyframes fly-in {
   0% {
-    -webkit-transform: scale(0.85) translateY(-10%);
-    transform: scale(0.85) translateY(-10%);
+    -webkit-transform: scale(0.9) translateY(10%);
+    transform: scale(0.9) translateY(10%);
     opacity: 0;
   }
   100% {
