@@ -12,19 +12,17 @@ const http = require('http').createServer(app);
 // Socket
 const io = require('socket.io')(http);
 
+const MongoStore = require('connect-mongo')(session);
+
 const port = process.env.PORT || 8000;
 
 const routesHandler = require('./routes/index');
-const authMiddleware = require('./middlewares/auth');
+// const authMiddleware = require('./middlewares/auth');
 const passport = require('passport');
 const Message = require('./models/Message');
 
 // Passport configuration
 require('./config/passport')(passport);
-
-if (app.get('env') === 'production') {
-  app.set('trust proxy', 1);
-}
 
 // Express Session Option
 const sessionMiddleware = session({
@@ -33,9 +31,6 @@ const sessionMiddleware = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production',
-  },
 });
 
 // Active users

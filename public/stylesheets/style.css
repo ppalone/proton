@@ -220,10 +220,14 @@ ul {
   list-style: none;
 }
 
-.message {
+.chat-div > ul > li {
   padding: 5px 0;
+}
+
+.message {
+  /* padding: 5px 0; */
   -webkit-animation: fly-in 300ms ease-in-out;
-  animation: fly-in 300ms ease-in-out;
+  animation: fly-in 400ms ease-in-out;
 }
 
 .chat-form-div {
@@ -256,18 +260,33 @@ ul {
   padding: 0;
 }
 
+.chat-ip {
+  margin-right: 5px;
+}
+
 .chat-ip input {
   width: 100%;
   height: 40px;
-  padding: 5px;
+  padding: 5px 5px 5px 10px;
   border: 1px solid var(--text-secondary);
+  border-radius: 20px;
 }
 
 .chat-form button {
   height: 40px;
-  padding: 0 10px;
-  border-radius: 0%;
-  min-width: auto;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 50%;
+  min-width: 0;
+  padding-left: 2px;
+  /* color: var(--bg-primary); */
+}
+
+button svg {
+  fill: var(--bg-primary);
 }
 
 /* Model */
@@ -345,8 +364,8 @@ ul {
 /* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
 @-webkit-keyframes fly-in {
   0% {
-    -webkit-transform: scale(0.85) translateY(10%);
-    transform: scale(0.85) translateY(10%);
+    -webkit-transform: scale(0.85) translateY(-10%);
+    transform: scale(0.85) translateY(-10%);
     opacity: 0;
   }
   100% {
@@ -357,8 +376,8 @@ ul {
 }
 @keyframes fly-in {
   0% {
-    -webkit-transform: scale(0.85) translateY(10%);
-    transform: scale(0.85) translateY(10%);
+    -webkit-transform: scale(0.85) translateY(-10%);
+    transform: scale(0.85) translateY(-10%);
     opacity: 0;
   }
   100% {

@@ -17,7 +17,7 @@
     <div class="chat-div">
       <ul>
         <% messages.forEach(message => { %>
-          <li class="message"><strong><%= message.by.username %></strong> - <%= message.text %></li>
+          <li><strong><%= message.by.username %></strong> - <%= message.text %></li>
         <% }) %>
       </ul>
     </div>
@@ -32,7 +32,9 @@
           />
         </div>
         <div>
-          <button type="submit">SEND</button>
+          <button type="submit">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+          </button>
         </div>
       </form>
     </div>
@@ -56,8 +58,10 @@
 
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    // DOM Elements
+    // Socket
     const socket = io();
+
+    // DOM Elements
     const chatForm = document.querySelector('.chat-form');
     const messageList = document.querySelector('.chat-div ul');
     const chatScreen = document.querySelector('.chat-div');
