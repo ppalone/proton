@@ -12,8 +12,6 @@ const http = require('http').createServer(app);
 // Socket
 const io = require('socket.io')(http);
 
-const MongoStore = require('connect-mongo')(session);
-
 const port = process.env.PORT || 8000;
 
 const routesHandler = require('./routes/index');
