@@ -150,7 +150,9 @@
         
         modelWrapper.classList.add('model-active');
       } catch (error) {
+        // console.log(error)
         usersList.innerHTML = "Can't get active users"; 
+        modelWrapper.classList.add('model-active');
       }
     }
 

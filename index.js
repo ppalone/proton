@@ -15,11 +15,16 @@ const io = require('socket.io')(http);
 const port = process.env.PORT || 8000;
 
 const routesHandler = require('./routes/index');
+const authMiddleware = require('./middlewares/auth');
 const passport = require('passport');
 const Message = require('./models/Message');
 
 // Passport configuration
 require('./config/passport')(passport);
+
+if (app.get('env') === 'production') {
+  app.set('trust proxy', 1);
+}
 
 // Express Session Option
 const sessionMiddleware = session({
@@ -28,7 +33,13 @@ const sessionMiddleware = session({
   secret: process.env.EXPRESS_SESSION_SECRET,
   resave: true,
   saveUninitialized: true,
+  cookie: {
+    secure: process.env.NODE_ENV === 'production',
+  },
 });
+
+// Active users
+const users = [];
 
 // Connect to MongoDB
 require('./config/database');
@@ -84,8 +95,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-const users = [];
-
 // Socket Handling
 io.on('connection', async (socket) => {
   // console.log(socket.request);
@@ -101,6 +110,7 @@ io.on('connection', async (socket) => {
     // }
     users.push(socket.request.user.username);
 
+    // Send the username of the loggedin user when user joins
     socket.emit('join', {
       username: socket.request.user.username,
     });
@@ -139,7 +149,10 @@ io.on('connection', async (socket) => {
   });
 });
 
+// TODO: better way to get the active users
+// Gets active users
 app.get('/active', (req, res) => {
+  // Set removes duplicates from the array
   res.json([...new Set(users)]);
 });
 

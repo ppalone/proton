@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authMiddleware = require('../../middlewares/auth');
 const Message = require('../../models/Message');
+const users = require('../../index');
 
 router.get('/chat', authMiddleware.ensureAuth, async (req, res) => {
   // console.log(req.user);
