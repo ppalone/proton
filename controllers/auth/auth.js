@@ -84,4 +84,7 @@ module.exports = {
       res.redirect('/login');
     });
   },
+
+  // @route /auth/github
+  githubOAuth: passport.authenticate('github', { scope: ['user:email'] }),
 };

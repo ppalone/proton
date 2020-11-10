@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
@@ -32,7 +33,46 @@ module.exports = (passport) => {
     )
   );
 
-  passport.serializeUser((user, done) => done(null, user.id));
+  passport.use(
+    new GitHubStrategy(
+      {
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: `${process.env.BASE_URL}/auth/github/callback`,
+      },
+      async (accessToken, refreshToken, profile, done) => {
+        try {
+          // Check if user with that github id already exists
+          let existingUser = await User.findOne({ githubId: profile.id });
+
+          // console.log(profile);
+
+          if (existingUser) {
+            // User already exists
+            // console.log('User exists');
+            // console.log(existingUser);
+            done(null, existingUser);
+          } else {
+            // Create a new user
+            let newUser = User({
+              username: profile.username,
+              githubId: profile.id,
+            });
+
+            let user = await newUser.save();
+
+            done(null, user);
+          }
+        } catch (err) {
+          done(err);
+        }
+      }
+    )
+  );
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
 
   passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => done(err, user));
