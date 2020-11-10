@@ -134,7 +134,8 @@ ul {
   width: 90%;
   max-width: 400px;
   /* margin: 25% auto 0 auto; */
-  padding: 20% 0;
+  /* padding: 20% 0; */
+  padding-top: calc(var(--nav-height) + 10%);
   margin: 0 auto;
 }
 
@@ -142,7 +143,7 @@ ul {
   padding: 6px 0;
 }
 
-.auth-form > div:nth-last-child(1) {
+.auth-form > div:nth-last-child(3) {
   text-align: right;
 }
 
@@ -159,6 +160,28 @@ ul {
 .auth-form button {
   width: 100%;
   border-radius: 0%;
+}
+
+.github__oauth {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.github__oauth > button {
+  background-color: #211f1f;
+}
+
+.or__div {
+  width: 100%;
+  text-align: center;
+  height: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.or__div span {
+  color: rgba(0, 0, 0, 0.25);
+  background-color: #ffffff;
+  padding: 0 5px;
 }
 
 /* Chat UI */
