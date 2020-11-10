@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt');
-const SALT_FACTOR = 10;
 
 const UserSchema = mongoose.Schema({
   username: {
@@ -14,8 +12,6 @@ const UserSchema = mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-    unique: true,
   },
 });
 
