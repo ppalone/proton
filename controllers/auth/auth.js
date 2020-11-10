@@ -65,7 +65,6 @@ module.exports = {
       // return res.redirect('/login');
 
       // Login user after successful registeration
-      // Heroku Error
       req.login(user, (err) => {
         if (err) next(err);
         return res.redirect('/chat');
