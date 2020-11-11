@@ -75,15 +75,15 @@
     // Custom Function to escape tags
     // https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
     String.prototype.escape = function() {
-    var tagsToReplace = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;'
+      const tagsToReplace = {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;'
+      };
+      return this.replace(/[&<>]/g, function(tag) {
+          return tagsToReplace[tag] || tag;
+      });
     };
-    return this.replace(/[&<>]/g, function(tag) {
-        return tagsToReplace[tag] || tag;
-    });
-};
 
     // Scroll to the bottom
     chatScreen.scrollTo(0, chatScreen.scrollHeight);
@@ -107,7 +107,10 @@
 
     socket.on('message', data => {
       // console.log(data);
+      // When anyone recieves a message
       messageList.appendChild(createChatMessage(data));
+      // TODO: Add an observable to last one
+      // chatScreen.scrollTo(0, chatScreen.scrollHeight);
     })
 
     // Events
