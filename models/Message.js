@@ -9,6 +9,10 @@ const MessageSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    room: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Room',
+    },
   },
   { timestamps: true }
 );

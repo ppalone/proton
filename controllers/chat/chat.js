@@ -16,4 +16,11 @@ module.exports = {
       res.send('Server internal error');
     }
   },
+
+  //@route GET /chat/rooms/:room
+  //@desc Get Messages from specific room
+  getRoom: async (req, res) => {},
+
+  //@route POST /chat/rooms
+  createRoom: async (req, res) => {},
 };
