@@ -1,0 +1,29 @@
+<%- include ('partials/header') %>
+
+<div class="container">
+  <header>
+    <h2>ProtonChat</h2>
+  </header>
+
+  <div class="addroom">
+    <form action="/rooms" method="POST" class="addroom__form">
+      <h2>Create a Room</h2>
+      <div>
+        <label for="roomname">Room Name</label>
+      </div>
+      <div>
+        <input
+          type="text"
+          placeholder="Enter room name"
+          name="roomname"
+          required
+        />
+      </div>
+      <div>
+        <input type="submit" value="Create Room" />
+      </div>
+    </form>
+  </div>
+</div>
+
+<%- include ('partials/footer') %>

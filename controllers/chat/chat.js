@@ -1,4 +1,6 @@
+const mongoose = require('mongoose');
 const Message = require('../../models/Message');
+const Room = require('../../models/Room');
 
 module.exports = {
   //@route GET /chat
@@ -6,21 +8,44 @@ module.exports = {
   getChat: async (req, res) => {
     // console.log(req.user);
     try {
-      let messages = await Message.find({})
-        .sort({ createdAt: 1 })
-        .populate('by', 'username');
+      // let isAdmin = req.user.isAdmin;
+      // let messages = await Message.find({})
+      //   .sort({ createdAt: 1 })
+      //   .populate('by', 'username');
+
+      // Get all rooms
+      let rooms = await Room.find({});
+
+      res.redirect(`/chat/${rooms[0].id}`);
       // console.log(messages);
-      res.render('chat', { messages });
+      // res.render('chat', { messages, isAdmin, rooms });
     } catch (err) {
       console.log('Error: ' + err);
       res.send('Server internal error');
     }
   },
 
-  //@route GET /chat/rooms/:room
+  //@route GET /chat/:room
   //@desc Get Messages from specific room
-  getRoom: async (req, res) => {},
+  getRoom: async (req, res) => {
+    try {
+      const { roomid } = req.params;
 
-  //@route POST /chat/rooms
-  createRoom: async (req, res) => {},
+      let room = await Room.findById(mongoose.Types.ObjectId(roomid));
+
+      if (!room) {
+        return res.send('Error 404: Page not found!');
+      }
+
+      let messages = await Message.find({ room: room.id })
+        .sort({ createdAt: 1 })
+        .populate('by', 'username');
+      let rooms = await Room.find({});
+      let isAdmin = req.user.isAdmin;
+
+      res.render('chat', { messages, isAdmin, room, rooms });
+    } catch (err) {
+      console.log(err);
+    }
+  },
 };

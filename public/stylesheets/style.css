@@ -422,6 +422,26 @@ button svg {
   display: none;
 }
 
+/* Create Room */
+.addroom {
+  padding-top: 10%;
+}
+
+.addroom__form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.addroom__form > div {
+  margin: 8px 0;
+}
+
+.addroom__form > div > input {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .container,

@@ -1,3 +1,4 @@
+const room = require('../controllers/room/room');
 const Message = require('../models/Message');
 
 const wrap = (middleware) => (socket, next) =>
@@ -31,7 +32,9 @@ module.exports = (io, sessionMiddleware, passport) => {
     // console.log('User connected!');
     // Look for new user
 
-    socket.on('join', () => {
+    // socket.join(room);
+
+    socket.on('join', (room) => {
       // socket.broadcast.emit('message', {
       //   username: 'Bot 🤖',
       //   message: `${socket.request.user.username} has joined the chat 🤩`,
@@ -41,29 +44,40 @@ module.exports = (io, sessionMiddleware, passport) => {
       // users.push(socket.request.user.username);
 
       // Send the username of the loggedin user when user joins
+      socket.join(room);
+
       socket.emit('join', {
         username: socket.request.user.username,
       });
     });
 
-    socket.on('message', async (msg) => {
+    socket.on('message', async (data) => {
       // Get the user who sent the message
       // Emit to all users accept the current user
       // data = {
       //   username: socket.request.user.username,
       //   message: msg,
+
+      // console.log(data);
+
       // };
       try {
         let newmessage = new Message({
-          text: msg,
-          by: socket.request.user._id,
+          text: data.msg,
+          by: socket.request.user.id,
+          room: data.room,
         });
 
         await newmessage.save();
 
-        socket.broadcast.emit('message', {
+        // socket.broadcast.emit('message', {
+        //   username: socket.request.user.username,
+        //   message: msg,
+        // });
+
+        socket.to(data.room).emit('message', {
           username: socket.request.user.username,
-          message: msg,
+          message: data.msg,
         });
       } catch (err) {
         console.log('Error: ' + err);

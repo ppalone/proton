@@ -1,25 +1,40 @@
 <%- include ('partials/header') %>
 
 <div class="chat-container">
-
   <!-- Sidebar -->
   <div class="sidebar">
     <div class="sidebar__header">
       <h2>ProtonChat</h2>
       <div class="close__icon">
-        <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="times" class="svg-inline--fa fa-times fa-w-11" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512"><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="times"
+          class="svg-inline--fa fa-times fa-w-11"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 352 512"
+        >
+          <path
+            fill="currentColor"
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+          ></path>
+        </svg>
       </div>
     </div>
     <div class="sidebar__rooms">
       <ul>
-        <li>#general</li>
-        <li>#opensource</li>
-        <li>#projects</li>
+        <% rooms.forEach(room => { %>
+        <li><a href="/chat/<%= room.id %>">#<%= room.name %></a></li>
+        <% }) %>
       </ul>
     </div>
+    <% if (isAdmin) { %>
     <div class="sidebar__add">
-      <a href='/rooms/new'>Add Room + </a>
+      <a href="/rooms/new">Add Room + </a>
     </div>
+    <% } %>
   </div>
 
   <!-- Chat -->
@@ -38,7 +53,7 @@
         </svg>
       </div>
       <div>
-        <h2>#chat</h2>
+        <h2>#<%= room.name %></h2>
       </div>
       <div class="spacer"></div>
       <div>
@@ -52,7 +67,13 @@
     <!-- Chat Messages -->
     <ul class="chat__messages">
       <% messages.forEach(message => { %>
-        <li><strong><%= message.by.username %></strong> - <%= message.text %></li>
+      <li>
+        <strong style="color: purple; font-size: 18px"
+          ><%= message.by.username %></strong
+        >
+        <i style="font-size: 14px"><%= message.createdAt %></i>
+        <p><%= message.text %></p>
+      </li>
       <% }) %>
     </ul>
 
@@ -68,7 +89,16 @@
         </div>
         <div>
           <button type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="black"
+              width="18px"
+              height="18px"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
           </button>
         </div>
       </form>
@@ -91,134 +121,141 @@
   </div>
 </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    // Socket
-    const socket = io();
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  // Socket
+  const socket = io();
 
-    // DOM Elements
-    const chatForm = document.querySelector('.chat-form');
-    const messageList = document.querySelector('.chat__messages');
-    const chatScreen = document.querySelector('.chat');
-    const chatInput = document.querySelector('.chat-ip input');
-    const modelWrapper = document.querySelector('.model-wrapper');
-    const model = document.querySelector('.model');
-    const showUserBtn = document.querySelector('.show-users');
-    const usersList = document.querySelector('.users-list ul');
-    const sidebar = document.querySelector('.sidebar');
-    const hamburger = document.querySelector('.hamburger__icon');
-    const close = document.querySelector('.close__icon');
-    let currentUser;
-    // let isSidebarOpen = false;
+  // console.log(window.location.pathname);
+  let roomid = window.location.pathname.split('/')[2];
 
-    const closeSideabar = () => {
-      // isSidebarOpen = false;
-      sidebar.classList.remove('sidebar__open');
+  // DOM Elements
+  const chatForm = document.querySelector('.chat-form');
+  const messageList = document.querySelector('.chat__messages');
+  const chatScreen = document.querySelector('.chat');
+  const chatInput = document.querySelector('.chat-ip input');
+  const modelWrapper = document.querySelector('.model-wrapper');
+  const model = document.querySelector('.model');
+  const showUserBtn = document.querySelector('.show-users');
+  const usersList = document.querySelector('.users-list ul');
+  const sidebar = document.querySelector('.sidebar');
+  const hamburger = document.querySelector('.hamburger__icon');
+  const close = document.querySelector('.close__icon');
+  let currentUser;
+  // let isSidebarOpen = false;
+
+  const closeSideabar = () => {
+    // isSidebarOpen = false;
+    sidebar.classList.remove('sidebar__open');
+  };
+
+  const openSidebar = () => {
+    // isSidebarOpen = true;
+    sidebar.classList.add('sidebar__open');
+  };
+
+  hamburger.addEventListener('click', openSidebar);
+  close.addEventListener('click', closeSideabar);
+
+  // Custom Function to escape tags
+  // https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
+  String.prototype.escape = function () {
+    const tagsToReplace = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+    };
+    return this.replace(/[&<>]/g, function (tag) {
+      return tagsToReplace[tag] || tag;
+    });
+  };
+
+  // Scroll to the bottom
+  messageList.scrollTo(0, messageList.scrollHeight);
+
+  socket.emit('join', roomid);
+
+  // When users joins
+  socket.on('join', ({ username }) => {
+    currentUser = username;
+  });
+
+  // Functions
+  const createChatMessage = ({ username, message }) => {
+    let ele = document.createElement('li');
+    ele.className = 'message';
+    message = message.escape();
+    ele.innerHTML = `<strong>${username}</strong> - ${message}`;
+    return ele;
+  };
+
+  socket.on('message', (data) => {
+    // console.log(data);
+    // When anyone recieves a message
+    messageList.appendChild(createChatMessage(data));
+    // TODO: Add an observable to last one
+    // chatScreen.scrollTo(0, chatScreen.scrollHeight);
+  });
+
+  // Events
+  chatForm.onsubmit = (e) => {
+    e.preventDefault();
+
+    // Check if the message is empty
+    if (!chatInput.value.trim()) {
+      return;
     }
 
-    const openSidebar = () => {
-      // isSidebarOpen = true;
-      sidebar.classList.add('sidebar__open');
-    }
+    // Emit a message to server
 
-    hamburger.addEventListener('click', openSidebar);
-    close.addEventListener('click', closeSideabar);
-
-    // Custom Function to escape tags
-    // https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
-    String.prototype.escape = function() {
-      const tagsToReplace = {
-          '&': '&amp;',
-          '<': '&lt;',
-          '>': '&gt;'
-      };
-      return this.replace(/[&<>]/g, function(tag) {
-          return tagsToReplace[tag] || tag;
-      });
+    data = {
+      msg: chatInput.value.trim(),
+      room: roomid,
     };
 
-    // Scroll to the bottom
+    socket.emit('message', data);
+
+    messageData = {
+      username: currentUser,
+      message: chatInput.value.trim(),
+    };
+
+    // console.log(messageData);
+
+    // append to messages
+    messageList.appendChild(createChatMessage(messageData));
+
+    // clear chat input
+    chatInput.value = '';
+    // scroll down
     messageList.scrollTo(0, messageList.scrollHeight);
+    // chatInput.focus();
+    return false;
+  };
 
-    // When user joins
-    socket.emit('join');
+  showUserBtn.onclick = async () => {
+    try {
+      usersList.innerHTML = '';
+      let res = await fetch('/active');
+      let activeUsers = await res.json();
 
-    // When users joins
-    socket.on('join', ({ username })=> {
-      currentUser = username;
-    })
+      activeUsers.forEach((user) => {
+        let li = document.createElement('li');
+        li.textContent = user;
+        usersList.appendChild(li);
+      });
 
-    // Functions
-    const createChatMessage = ({username, message}) => {
-      let ele = document.createElement('li');
-      ele.className = 'message';
-      message = message.escape();
-      ele.innerHTML = `<strong>${username}</strong> - ${message}`;
-      return ele;
-    };
-
-    socket.on('message', data => {
-      // console.log(data);
-      // When anyone recieves a message
-      messageList.appendChild(createChatMessage(data));
-      // TODO: Add an observable to last one
-      // chatScreen.scrollTo(0, chatScreen.scrollHeight);
-    })
-
-    // Events
-    chatForm.onsubmit = (e) => {
-      e.preventDefault();
-
-      // Check if the message is empty
-      if (!chatInput.value.trim()) {
-        return;
-      }
-
-      // Emit a message to server
-      socket.emit('message', chatInput.value.trim())
-
-      messageData = {
-        username: currentUser,
-        message:  chatInput.value.trim()
-      }
-
-      // console.log(messageData);
-
-      // append to messages
-      messageList.appendChild(createChatMessage(messageData));
-
-      // clear chat input
-      chatInput.value = '';
-      // scroll down
-      messageList.scrollTo(0, messageList.scrollHeight);
-      // chatInput.focus();
-      return false;
-    };
-
-    showUserBtn.onclick = async () => {
-      try {
-        usersList.innerHTML = '';
-        let res = await fetch('/active');
-        let activeUsers = await res.json();
-
-        activeUsers.forEach(user => {
-          let li = document.createElement('li');
-          li.textContent = user;
-          usersList.appendChild(li);
-        });
-        
-        modelWrapper.classList.add('model-active');
-      } catch (error) {
-        // console.log(error)
-        usersList.innerHTML = "Can't get active users"; 
-        modelWrapper.classList.add('model-active');
-      }
+      modelWrapper.classList.add('model-active');
+    } catch (error) {
+      // console.log(error)
+      usersList.innerHTML = "Can't get active users";
+      modelWrapper.classList.add('model-active');
     }
+  };
 
-    modelWrapper.onclick = () => {
-      modelWrapper.classList.remove('model-active');
-    };
-  </script>
+  modelWrapper.onclick = () => {
+    modelWrapper.classList.remove('model-active');
+  };
+</script>
 
-  <%- include ('partials/footer') %>
-</div>
+<%- include ('partials/footer') %>
