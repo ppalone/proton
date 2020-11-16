@@ -182,6 +182,8 @@ ul {
 
 /* Chat UI */
 .chat-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   height: 100%;
@@ -192,14 +194,41 @@ ul {
   width: 80%;
   max-width: 280px;
   height: 100%;
+  background-color: var(--bg-primary);
 }
 
 .sidebar__header {
   height: var(--nav-height);
-  background-color: aqua;
+  border-bottom: 1px solid var(--text-primary);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   padding-left: 10px;
+}
+
+.close__icon {
+  display: none;
+}
+
+.close__icon svg {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.hamburger__icon {
+  display: none;
+  margin-right: 5px;
+  padding-top: 5px;
+}
+
+.hamburger__icon svg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
 }
 
 .sidebar__rooms {
@@ -219,16 +248,31 @@ ul {
   padding: 5px 0;
 }
 
+.sidebar__add {
+  padding: 5px 10px;
+}
+
 .chat {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
   flex-direction: column;
   height: 100%;
 }
 
 .chat__header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
   align-items: center;
   height: var(--nav-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--text-secondary);
@@ -236,14 +280,20 @@ ul {
 }
 
 .spacer {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
 }
 
 .chat__messages {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
   flex: 2;
+  max-height: -webkit-max-content;
+  max-height: -moz-max-content;
   max-height: max-content;
   overflow-y: scroll;
-  padding: 0 5px;
+  padding: 0 10px;
   word-break: break-all;
 }
 
@@ -265,10 +315,12 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .chat-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   width: 100%;
   margin: 0;
@@ -381,11 +433,43 @@ button svg {
     top: 0;
     left: 0;
     z-index: 2;
+    -webkit-transform: translateX(-280px);
+    -ms-transform: translateX(-280px);
     transform: translateX(-280px);
+    -webkit-box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition: -webkit-transform 300ms ease-in-out;
+    transition: -webkit-transform 300ms ease-in-out;
+    -o-transition: transform 300ms ease-in-out;
     transition: transform 300ms ease-in-out;
+    transition: transform 300ms ease-in-out, -webkit-transform 300ms ease-in-out;
   }
   .sidebar__open {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
     transform: translateX(0);
+  }
+  .hamburger__icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .close__icon {
+    margin-left: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 5px;
+    margin-right: 5px;
   }
   .model {
     width: 90%;
