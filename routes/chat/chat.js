@@ -3,6 +3,8 @@ const router = express.Router();
 const authMiddleware = require('../../middlewares/auth');
 const chatController = require('../../controllers/chat/chat');
 
-router.get('/chat', authMiddleware.ensureAuth, chatController.getChat);
+router
+  .get('/chat', authMiddleware.ensureAuth, chatController.getChat)
+  .get('/chat/:roomid', authMiddleware.ensureAuth, chatController.getRoom);
 
 module.exports = router;

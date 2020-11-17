@@ -1,26 +1,86 @@
 <%- include ('partials/header') %>
 
 <div class="chat-container">
-  <div class="chat-screen">
-    <div class="chat-header">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar__header">
+      <h2>ProtonChat</h2>
+      <div class="close__icon">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          data-prefix="fas"
+          data-icon="times"
+          class="svg-inline--fa fa-times fa-w-11"
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 352 512"
+        >
+          <path
+            fill="currentColor"
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+          ></path>
+        </svg>
+      </div>
+    </div>
+    <div class="sidebar__rooms">
+      <ul>
+        <% rooms.forEach(room => { %>
+        <li data-url="<%= room.id %>">
+          <a href="/chat/<%= room.id %>">#<%= room.name %></a>
+        </li>
+        <% }) %>
+      </ul>
+    </div>
+    <% if (isAdmin) { %>
+    <div class="sidebar__add">
+      <a href="/rooms/new">Add Room + </a>
+    </div>
+    <% } %>
+  </div>
+
+  <!-- Chat -->
+  <div class="chat">
+    <div class="chat__header">
+      <div class="hamburger__icon">
+        <svg
+          role="img"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 448 512"
+        >
+          <path
+            fill="#000"
+            d="M16 132h416c8.837 0 16-7.163 16-16V76c0-8.837-7.163-16-16-16H16C7.163 60 0 67.163 0 76v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16zm0 160h416c8.837 0 16-7.163 16-16v-40c0-8.837-7.163-16-16-16H16c-8.837 0-16 7.163-16 16v40c0 8.837 7.163 16 16 16z"
+          ></path>
+        </svg>
+      </div>
       <div>
-        <h2>#chat</h2>
+        <h2>#<%= room.name %></h2>
       </div>
       <div class="spacer"></div>
-      <div style="padding: 0 10px">
+      <div>
         <button class="show-users">Users</button>
       </div>
       <div>
         <button onclick="location.href='/logout'">Logout</button>
       </div>
     </div>
-    <div class="chat-div">
-      <ul>
-        <% messages.forEach(message => { %>
-          <li><strong><%= message.by.username %></strong> - <%= message.text %></li>
-        <% }) %>
-      </ul>
-    </div>
+
+    <!-- Chat Messages -->
+    <ul class="chat__messages">
+      <% messages.forEach(message => { %>
+      <li>
+        <strong style="color: purple; font-size: 18px"
+          ><%= message.by.username %></strong
+        >
+        <i style="font-size: 14px; color: rgba(0, 0, 0, 0.75)"
+          ><%= utils.formatTime(message.createdAt) %></i
+        >
+        <p><%= message.text %></p>
+      </li>
+      <% }) %>
+    </ul>
+
     <div class="chat-form-div">
       <form class="chat-form">
         <div class="chat-ip">
@@ -33,7 +93,16 @@
         </div>
         <div>
           <button type="submit">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px"><path d="M0 0h24v24H0z" fill="none"/><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="black"
+              width="18px"
+              height="18px"
+            >
+              <path d="M0 0h24v24H0z" fill="none" />
+              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+            </svg>
           </button>
         </div>
       </form>
@@ -56,115 +125,7 @@
   </div>
 </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    // Socket
-    const socket = io();
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascript/chat.js"></script>
 
-    // DOM Elements
-    const chatForm = document.querySelector('.chat-form');
-    const messageList = document.querySelector('.chat-div ul');
-    const chatScreen = document.querySelector('.chat-div');
-    const chatInput = document.querySelector('.chat-ip input');
-    const modelWrapper = document.querySelector('.model-wrapper');
-    const model = document.querySelector('.model');
-    const showUserBtn = document.querySelector('.show-users');
-    const usersList = document.querySelector('.users-list ul');
-    let currentUser;
-
-    // Custom Function to escape tags
-    // https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
-    String.prototype.escape = function() {
-    var tagsToReplace = {
-        '&': '&amp;',
-        '<': '&lt;',
-        '>': '&gt;'
-    };
-    return this.replace(/[&<>]/g, function(tag) {
-        return tagsToReplace[tag] || tag;
-    });
-};
-
-    // Scroll to the bottom
-    chatScreen.scrollTo(0, chatScreen.scrollHeight);
-
-    // When user joins
-    socket.emit('join');
-
-    // When users joins
-    socket.on('join', ({ username })=> {
-      currentUser = username;
-    })
-
-    // Functions
-    const createChatMessage = ({username, message}) => {
-      let ele = document.createElement('li');
-      ele.className = 'message';
-      message = message.escape();
-      ele.innerHTML = `<strong>${username}</strong> - ${message}`;
-      return ele;
-    };
-
-    socket.on('message', data => {
-      // console.log(data);
-      messageList.appendChild(createChatMessage(data));
-    })
-
-    // Events
-    chatForm.onsubmit = (e) => {
-      e.preventDefault();
-
-      // Check if the message is empty
-      if (!chatInput.value.trim()) {
-        return;
-      }
-
-      // Emit a message to server
-      socket.emit('message', chatInput.value.trim())
-
-      messageData = {
-        username: currentUser,
-        message:  chatInput.value.trim()
-      }
-
-      // console.log(messageData);
-
-      // append to messages
-      messageList.appendChild(createChatMessage(messageData));
-
-      // clear chat input
-      chatInput.value = '';
-      // scroll down
-      chatScreen.scrollTo(0, chatScreen.scrollHeight);
-      // chatInput.focus();
-      return false;
-    };
-
-    showUserBtn.onclick = async () => {
-      try {
-        usersList.innerHTML = '';
-        let res = await fetch('/active');
-        let activeUsers = await res.json();
-
-        activeUsers.forEach(user => {
-          let li = document.createElement('li');
-          li.textContent = user;
-          usersList.appendChild(li);
-        });
-        
-        modelWrapper.classList.add('model-active');
-      } catch (error) {
-        // console.log(error)
-        usersList.innerHTML = "Can't get active users"; 
-        modelWrapper.classList.add('model-active');
-      }
-    }
-
-    modelWrapper.onclick = () => {
-      // console.log('click');
-      modelWrapper.classList.remove('model-active');
-    };
-  </script>
-
-  <%- include ('partials/footer') %>
-</div>
+<%- include ('partials/footer') %>

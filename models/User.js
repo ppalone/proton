@@ -15,6 +15,10 @@ const UserSchema = mongoose.Schema({
   githubId: {
     type: String,
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // TODO: Hash password before saving

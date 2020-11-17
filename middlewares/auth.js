@@ -12,4 +12,10 @@ module.exports = {
     }
     next();
   },
+  isAdmin: (req, res, next) => {
+    if (!req.user.isAdmin) {
+      return res.send('Only admins are allowed to create rooms');
+    }
+    next();
+  },
 };

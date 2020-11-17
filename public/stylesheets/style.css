@@ -85,7 +85,6 @@ ul {
 
 .main {
   width: 100%;
-  /* margin-top: 10%; */
   padding-top: 10%;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -133,8 +132,6 @@ ul {
 .auth-form {
   width: 90%;
   max-width: 400px;
-  /* margin: 25% auto 0 auto; */
-  /* padding: 20% 0; */
   padding-top: calc(var(--nav-height) + 10%);
   margin: 0 auto;
 }
@@ -154,7 +151,6 @@ ul {
   font-size: 16px;
   outline: none;
   border: 1px solid var(--text-secondary);
-  /* border-radius: 20px; */
 }
 
 .auth-form button {
@@ -186,22 +182,126 @@ ul {
 
 /* Chat UI */
 .chat-container {
-  width: 60%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 100%;
   height: 100%;
-  margin: 0 auto;
 }
 
-.chat-header {
+/* Chat Sidebar */
+.sidebar {
+  width: 80%;
+  max-width: 280px;
+  height: 100%;
+  background-color: var(--bg-primary);
+}
+
+.sidebar__header {
+  height: var(--nav-height);
+  border-bottom: 1px solid var(--text-primary);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  padding-left: 10px;
+}
+
+.close__icon {
+  display: none;
+}
+
+.close__icon svg {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.hamburger__icon {
+  display: none;
+  margin: 0px 5px;
+  padding-top: 5px;
+}
+
+.hamburger__icon svg {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.sidebar__rooms {
+  padding: 10px;
+  overflow-y: scroll;
+}
+
+.sidebar__rooms::-webkit-scrollbar {
+  width: 0px;
+}
+
+.sidebar__rooms > ul {
+  list-style: none;
+}
+
+.sidebar__rooms > ul > li {
+  padding: 5px 0;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.sidebar__rooms > ul > li:hover {
+  background-color: rgba(100, 100, 100, 0.1);
+}
+
+.sidebar__room-active {
+  background-color: rgba(100, 100, 100, 0.1);
+}
+
+.sidebar__rooms > ul > li > a {
+  display: block;
+  color: var(--text-primary);
+  width: 100%;
+  height: 100%;
+  padding: 0 5px;
+}
+
+.sidebar__add {
+  padding: 5px 10px;
+}
+
+.chat {
+  -webkit-box-flex: 2;
+  -ms-flex: 2;
+  flex: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.chat__header {
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   height: var(--nav-height);
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--text-secondary);
+  /* padding: 0 5px; */
+}
+
+.chat__header button {
+  /* padding: 5px 10px; */
+  /* height: 40px; */
+  min-width: auto;
+  margin-right: 5px;
 }
 
 .spacer {
@@ -210,45 +310,27 @@ ul {
   flex: 2;
 }
 
-.chat-screen {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  /* height: calc(100vh - 56px); */
-  height: 100%;
-}
-
-.chat-div {
+.chat__messages {
   -webkit-box-flex: 2;
   -ms-flex: 2;
   flex: 2;
   max-height: -webkit-max-content;
   max-height: -moz-max-content;
   max-height: max-content;
-  width: 100%;
-  word-wrap: break-word;
   overflow-y: scroll;
+  padding: 0 10px;
+  word-break: break-all;
 }
 
-/* Custom scrollbar */
-.chat-div::-webkit-scrollbar {
-  display: none;
+.chat__messages::-webkit-scrollbar {
+  width: 0px;
 }
 
-.chat-div ul {
-  list-style: none;
-}
-
-.chat-div > ul > li {
+.chat__messages > li {
   padding: 5px 0;
 }
 
 .message {
-  /* padding: 5px 0; */
   -webkit-animation: fly-in 300ms ease-in-out;
   animation: fly-in 400ms ease-in-out;
 }
@@ -258,8 +340,7 @@ ul {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  /* align-items: center; */
-  padding-bottom: 10px;
+  padding-bottom: 5px;
 }
 
 .chat-form {
@@ -268,9 +349,7 @@ ul {
   display: flex;
   width: 100%;
   margin: 0;
-  /* Override the form max width */
-  padding: 0;
-  max-width: 100%;
+  padding: 0 4px;
 }
 
 .chat-ip {
@@ -310,7 +389,6 @@ ul {
   padding: 0;
   border-radius: 50%;
   min-width: 0;
-  padding-left: 2px;
   /* color: var(--bg-primary); */
 }
 
@@ -344,7 +422,7 @@ button svg {
 
 .model {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   width: 60%;
   max-width: 400px;
   height: 80%;
@@ -356,7 +434,6 @@ button svg {
 }
 
 .model-header {
-  /* height: 30px; */
   padding-bottom: 5px;
 }
 
@@ -370,12 +447,74 @@ button svg {
   display: none;
 }
 
+/* Create Room */
+.addroom {
+  padding-top: 10%;
+}
+
+.addroom__form {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.addroom__form > div {
+  margin: 8px 0;
+}
+
+.addroom__form > div > input {
+  width: 100%;
+  height: 40px;
+  padding: 5px;
+}
+
 /* Media Queries */
 @media (max-width: 768px) {
   .container,
-  .nav-container,
-  .chat-container {
+  .nav-container {
     width: 95%;
+  }
+  .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    -webkit-transform: translateX(-280px);
+    -ms-transform: translateX(-280px);
+    transform: translateX(-280px);
+    -webkit-box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.2);
+    -webkit-transition: -webkit-transform 250ms ease-in-out;
+    transition: -webkit-transform 250ms ease-in-out;
+    -o-transition: transform 250ms ease-in-out;
+    transition: transform 250ms ease-in-out;
+    transition: transform 250ms ease-in-out, -webkit-transform 300ms ease-in-out;
+  }
+  .sidebar__open {
+    -webkit-transform: translateX(0);
+    -ms-transform: translateX(0);
+    transform: translateX(0);
+  }
+  .hamburger__icon {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .close__icon {
+    margin-left: auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding-top: 5px;
+    margin-right: 5px;
   }
   .model {
     width: 90%;
