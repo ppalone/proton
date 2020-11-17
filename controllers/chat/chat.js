@@ -16,6 +16,17 @@ module.exports = {
       // Get all rooms
       let rooms = await Room.find({});
 
+      // console.log(rooms);
+      // No rooms
+      if (rooms.length === 0) {
+        let newroom = new Room({
+          name: 'general',
+        });
+
+        let room = await newroom.save();
+        return res.redirect(`/chat/${room.id}`);
+      }
+
       res.redirect(`/chat/${rooms[0].id}`);
       // console.log(messages);
       // res.render('chat', { messages, isAdmin, rooms });

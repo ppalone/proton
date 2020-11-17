@@ -60,19 +60,13 @@ app.use(flash());
 // Set global variables
 app.use(function (req, res, next) {
   // Passport error
+  res.locals.utils = require('./utils/utils');
   res.locals.error = req.flash('error');
   // Custom
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   next();
 });
-
-// TODO: better way to get the active users
-// Gets active users
-// app.get('/active', (req, res) => {
-//   // Set removes duplicates from the array
-//   res.json([...new Set(users)]);
-// });
 
 app.use(routesHandler);
 

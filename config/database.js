@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
+      useFindAndModify: false,
     });
     console.log('Connected to Mongodb');
   } catch (err) {

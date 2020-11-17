@@ -1,4 +1,4 @@
-const room = require('../controllers/room/room');
+const User = require('../models/Room');
 const Message = require('../models/Message');
 
 const wrap = (middleware) => (socket, next) =>
@@ -6,6 +6,7 @@ const wrap = (middleware) => (socket, next) =>
 
 module.exports = (io, sessionMiddleware, passport) => {
   // This allows to us to see the user in sockets
+  // https://github.com/socketio/socket.io/tree/master/examples/passport-example
   io.use(wrap(sessionMiddleware));
   io.use(wrap(passport.initialize()));
   io.use(wrap(passport.session()));
@@ -19,22 +20,19 @@ module.exports = (io, sessionMiddleware, passport) => {
 
   io.use((socket, next) => {
     // console.log(socket.request.user);
+
+    // if the user is authenticated it will create socket.request.user
     if (socket.request.user) {
       next();
     } else {
-      next(new Error('unauthorized'));
+      next(new Error('Unauthorized'));
     }
   });
 
   // Socket Handling
   io.on('connection', async (socket) => {
-    // console.log(socket.request);
-    // console.log('User connected!');
-    // Look for new user
-
-    // socket.join(room);
-
-    socket.on('join', (room) => {
+    socket.on('join', async (room) => {
+      // Send to everyone including sender
       // socket.broadcast.emit('message', {
       //   username: 'Bot 🤖',
       //   message: `${socket.request.user.username} has joined the chat 🤩`,
@@ -75,6 +73,7 @@ module.exports = (io, sessionMiddleware, passport) => {
         //   message: msg,
         // });
 
+        // Emit message to the room
         socket.to(data.room).emit('message', {
           username: socket.request.user.username,
           message: data.msg,
