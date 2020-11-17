@@ -20,6 +20,4 @@ const UserSchema = mongoose.Schema({
   },
 });
 
-// TODO: Hash password before saving
-
 module.exports = mongoose.model('User', UserSchema);

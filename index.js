@@ -16,7 +16,6 @@ const port = process.env.PORT || 8000;
 
 const routesHandler = require('./routes/index');
 const passport = require('passport');
-const Message = require('./models/Message');
 
 // Passport configuration
 require('./config/passport')(passport);
@@ -29,9 +28,6 @@ const sessionMiddleware = session({
   resave: true,
   saveUninitialized: true,
 });
-
-// Active users
-// const users = [];
 
 // Connect to MongoDB
 require('./config/database');
@@ -59,10 +55,8 @@ app.use(flash());
 
 // Set global variables
 app.use(function (req, res, next) {
-  // Passport error
   res.locals.utils = require('./utils/utils');
   res.locals.error = req.flash('error');
-  // Custom
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   next();
@@ -70,6 +64,7 @@ app.use(function (req, res, next) {
 
 app.use(routesHandler);
 
+// Page not found!
 app.get('*', (req, res) => {
   res.send('Page not found');
 });

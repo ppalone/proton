@@ -27,7 +27,7 @@
       <ul>
         <% rooms.forEach(room => { %>
         <li data-url="<%= room.id %>">
-          <a href="/chat/<%= room.id %>">#<%= room.name %></a>
+          <a href="/chat/<%= room.id %>"># <%= room.name %></a>
         </li>
         <% }) %>
       </ul>
@@ -41,6 +41,7 @@
 
   <!-- Chat -->
   <div class="chat">
+    <!-- Chat Header -->
     <div class="chat__header">
       <div class="hamburger__icon">
         <svg
@@ -81,6 +82,7 @@
       <% }) %>
     </ul>
 
+    <!-- Chat Input -->
     <div class="chat-form-div">
       <form class="chat-form">
         <div class="chat-ip">
@@ -117,9 +119,7 @@
         <h3>Active users</h3>
       </div>
       <div class="users-list">
-        <ul>
-          <!-- <li>Active users will be shown here!</li> -->
-        </ul>
+        <ul></ul>
       </div>
     </div>
   </div>

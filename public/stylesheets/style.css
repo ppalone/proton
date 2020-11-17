@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Piazzolla&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+Pro&display=swap');
 
 * {
   margin: 0;
@@ -7,9 +7,10 @@
   box-sizing: border-box;
 }
 
+/* GLOBAL VARIABLES */
 :root {
   --bg-primary: #ffffff;
-  --font-family: 'Piazzolla', sans-serif;
+  --font-family: 'Source Serif Pro', sans-serif;
   --text-primary: #000000;
   --text-secondary: #3d3d3d;
   --special: #8575dd;
@@ -29,7 +30,6 @@ html {
   font-family: var(--font-family);
 }
 
-/* Global */
 button {
   font-family: var(--font-family);
   padding: 10px 20px;
@@ -63,6 +63,7 @@ ul {
   margin: 0 auto;
 }
 
+/* NAVIGATION BAR */
 .nav-container {
   width: 60%;
   margin: 0 auto;
@@ -83,6 +84,7 @@ ul {
   background-color: var(--bg-primary);
 }
 
+/* HOMEPAGE */
 .main {
   width: 100%;
   padding-top: 10%;
@@ -128,7 +130,7 @@ ul {
   margin: 10px;
 }
 
-/* Login and Register form */
+/* LOGIN AND REGISTER FORM */
 .auth-form {
   width: 90%;
   max-width: 400px;
@@ -180,7 +182,7 @@ ul {
   padding: 0 5px;
 }
 
-/* Chat UI */
+/* CHAT SCREEN */
 .chat-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -189,7 +191,7 @@ ul {
   height: 100%;
 }
 
-/* Chat Sidebar */
+/* CHAT SCREEN SIDEBAR */
 .sidebar {
   width: 80%;
   max-width: 280px;
@@ -245,7 +247,6 @@ ul {
 }
 
 .sidebar__rooms > ul > li {
-  padding: 5px 0;
   margin: 5px 0;
   border-radius: 4px;
 }
@@ -256,6 +257,7 @@ ul {
 
 .sidebar__room-active {
   background-color: rgba(100, 100, 100, 0.1);
+  font-weight: 600;
 }
 
 .sidebar__rooms > ul > li > a {
@@ -263,13 +265,14 @@ ul {
   color: var(--text-primary);
   width: 100%;
   height: 100%;
-  padding: 0 5px;
+  padding: 5px;
 }
 
 .sidebar__add {
   padding: 5px 10px;
 }
 
+/* CHAT SCREEN MAIN */
 .chat {
   -webkit-box-flex: 2;
   -ms-flex: 2;
@@ -294,12 +297,9 @@ ul {
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--text-secondary);
-  /* padding: 0 5px; */
 }
 
 .chat__header button {
-  /* padding: 5px 10px; */
-  /* height: 40px; */
   min-width: auto;
   margin-right: 5px;
 }
@@ -389,14 +389,13 @@ ul {
   padding: 0;
   border-radius: 50%;
   min-width: 0;
-  /* color: var(--bg-primary); */
 }
 
 button svg {
   fill: var(--bg-primary);
 }
 
-/* Model */
+/* MODEL */
 .model-wrapper {
   display: none;
   position: absolute;
@@ -447,7 +446,7 @@ button svg {
   display: none;
 }
 
-/* Create Room */
+/* CREATE ROOM */
 .addroom {
   padding-top: 10%;
 }
@@ -467,12 +466,13 @@ button svg {
   padding: 5px;
 }
 
-/* Media Queries */
+/* MEDIA QUERIES */
 @media (max-width: 768px) {
   .container,
   .nav-container {
     width: 95%;
   }
+
   .sidebar {
     position: absolute;
     top: 0;
@@ -489,11 +489,13 @@ button svg {
     transition: transform 250ms ease-in-out;
     transition: transform 250ms ease-in-out, -webkit-transform 300ms ease-in-out;
   }
+
   .sidebar__open {
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
     transform: translateX(0);
   }
+
   .hamburger__icon {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -505,6 +507,7 @@ button svg {
     -ms-flex-align: center;
     align-items: center;
   }
+
   .close__icon {
     margin-left: auto;
     display: -webkit-box;
@@ -516,9 +519,11 @@ button svg {
     padding-top: 5px;
     margin-right: 5px;
   }
+
   .model {
     width: 90%;
   }
+
   .logo svg {
     width: 50%;
     min-width: 100px;
@@ -526,25 +531,11 @@ button svg {
   }
 }
 
-/* Chat message animation */
-/* https://bilianavaleva.com/conversational-ui-with-flexbox/ */
-@-webkit-keyframes fly-in {
-  0% {
-    -webkit-transform: scale(0.85) translateY(10%);
-    transform: scale(0.85) translateY(10%);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: scale(1) translateY(0);
-    transform: scale(1) translateY(0);
-    opacity: 1;
-  }
-}
-
+/* CHAT MESSAGE ANIMATION */
 @keyframes fly-in {
   0% {
-    -webkit-transform: scale(0.9) translateY(10%);
-    transform: scale(0.9) translateY(10%);
+    -webkit-transform: scale(0.95) translateY(5%);
+    transform: scale(0.95) translateY(5%);
     opacity: 0;
   }
   100% {

@@ -1,9 +1,6 @@
 // Socket
 const socket = io();
 
-// console.log(window.location.pathname);
-let roomid = window.location.pathname.split('/')[2];
-
 // DOM Elements
 const chatForm = document.querySelector('.chat-form');
 const messageList = document.querySelector('.chat__messages');
@@ -14,10 +11,14 @@ const model = document.querySelector('.model');
 const showUserBtn = document.querySelector('.show-users');
 const usersList = document.querySelector('.users-list ul');
 const sidebar = document.querySelector('.sidebar');
-const hamburger = document.querySelector('.hamburger__icon');
-const close = document.querySelector('.close__icon');
+const hamburgerIcon = document.querySelector('.hamburger__icon');
+const closeIcon = document.querySelector('.close__icon');
 const rooms = document.querySelectorAll('.sidebar__rooms > ul > li');
+
+// Username of current user
 let currentUser;
+// Room id of the current room
+let roomid = window.location.pathname.split('/')[2];
 
 rooms.forEach((room) => {
   if (room.dataset.url === roomid) {
@@ -57,11 +58,6 @@ const formatTime = (string) => {
   return `${hh}:${mm} ${day} ${month}`;
 };
 
-hamburger.addEventListener('click', openSidebar);
-close.addEventListener('click', closeSideabar);
-
-// Custom Function to escape tags
-// https://medium.com/@shashankvivek.7/understanding-xss-and-preventing-it-using-pure-javascript-ef0668b37687
 String.prototype.escape = function () {
   const tagsToReplace = {
     '&': '&amp;',
@@ -78,7 +74,6 @@ messageList.scrollTo(0, messageList.scrollHeight);
 
 socket.emit('join', roomid);
 
-// When users joins
 socket.on('join', ({ username }) => {
   currentUser = username;
 });
@@ -93,12 +88,12 @@ const createChatMessage = ({ username, message }) => {
     <i style="font-size: 14px; color: rgba(0, 0, 0, 0.75);">${formatTime(
       date.toISOString()
     )}</i>
-    <p>${message}</p>`;
+    <p>${message}</p>
+  `;
   return ele;
 };
 
 socket.on('message', (data) => {
-  // console.log(data);
   // When anyone recieves a message
   messageList.appendChild(createChatMessage(data));
   // TODO: Add an observable to last one
@@ -106,6 +101,10 @@ socket.on('message', (data) => {
 });
 
 // Events
+// open/close Sidebar
+hamburgerIcon.addEventListener('click', openSidebar);
+closeIcon.addEventListener('click', closeSideabar);
+
 chatForm.onsubmit = (e) => {
   e.preventDefault();
 

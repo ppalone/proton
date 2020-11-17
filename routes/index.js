@@ -4,7 +4,9 @@ const authRoutes = require('./auth/auth');
 const chatRoutes = require('./chat/chat');
 const roomRoutes = require('./room/room');
 
-router.get('/', (req, res) => {
+const authMiddlewares = require('../middlewares/auth');
+
+router.get('/', authMiddlewares.forwardAuth, (req, res) => {
   res.render('index');
 });
 

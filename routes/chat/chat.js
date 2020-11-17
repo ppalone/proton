@@ -5,6 +5,6 @@ const chatController = require('../../controllers/chat/chat');
 
 router
   .get('/chat', authMiddleware.ensureAuth, chatController.getChat)
-  .get('/chat/:roomid', authMiddleware.ensureAuth, chatController.getRoom);
+  .get('/chat/:roomid', authMiddleware.ensureAuth, chatController.getRoomChat);
 
 module.exports = router;

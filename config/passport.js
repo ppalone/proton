@@ -1,4 +1,3 @@
-const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const GitHubStrategy = require('passport-github2').Strategy;
 const bcrypt = require('bcrypt');
@@ -45,20 +44,15 @@ module.exports = (passport) => {
           // Check if user with that github id already exists
           let existingUser = await User.findOne({ githubId: profile.id });
 
-          // console.log(profile);
-
           if (existingUser) {
-            // User already exists
-            // console.log('User exists');
-            // console.log(existingUser);
             done(null, existingUser);
           } else {
-            // Create a new user
             let newUser = User({
               username: profile.username,
               githubId: profile.id,
             });
 
+            // Save the user
             let user = await newUser.save();
 
             done(null, user);
