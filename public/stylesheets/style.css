@@ -294,6 +294,11 @@ ul {
   animation: fly-in 250ms ease-in-out;
 }
 
+.chat__typing {
+  padding: 5px 10px;
+  color: var(--text-secondary);
+}
+
 .chat-form-div {
   height: var(--nav-height);
   display: flex;

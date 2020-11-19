@@ -100,10 +100,28 @@ socket.on('message', (data) => {
   // chatScreen.scrollTo(0, chatScreen.scrollHeight);
 });
 
+socket.on('typing', (data) => {
+  document.querySelector('.chat__typing').innerHTML = `${data.username} is typing . . .`
+});
+
+socket.on('stoptyping', () => {
+  document.querySelector('.chat__typing').innerHTML = ``;
+});
+
 // Events
 // open/close Sidebar
 hamburgerIcon.addEventListener('click', openSidebar);
 closeIcon.addEventListener('click', closeSideabar);
+
+chatInput.addEventListener('focus', () => {
+  // console.log('Typing!');
+  socket.emit('typing', { room: roomid })
+});
+
+chatInput.addEventListener('blur', () => {
+  // console.log('Not Typing!');
+  socket.emit('stoptyping', { room: roomid, user: currentUser })
+});
 
 chatForm.onsubmit = (e) => {
   e.preventDefault();

@@ -1,5 +1,7 @@
-const User = require('../models/Room');
+// const User = require('../models/Room');
 const Message = require('../models/Message');
+
+let typingUser = '';
 
 const wrap = (middleware) => (socket, next) =>
   middleware(socket.request, {}, next);
@@ -48,6 +50,18 @@ module.exports = (io, sessionMiddleware, passport) => {
         });
       } catch (err) {
         console.log('Error: ' + err);
+      }
+    });
+
+    socket.on('typing', (data) => {
+      socket.to(data.room).emit('typing', {
+        username: socket.request.user.username,
+      });
+    });
+
+    socket.on('stoptyping', (data) => {
+      if (data.user === socket.request.user.username) {
+        socket.to(data.room).emit('stoptyping');
       }
     });
 
