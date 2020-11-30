@@ -14,11 +14,36 @@ const sidebar = document.querySelector('.sidebar');
 const hamburgerIcon = document.querySelector('.hamburger__icon');
 const closeIcon = document.querySelector('.close__icon');
 const rooms = document.querySelectorAll('.sidebar__rooms > ul > li');
+const unreadMessages = document.querySelector('.unread__messages');
+
+// console.log(unreadMessages);
 
 // Username of current user
 let currentUser;
 // Room id of the current room
 let roomid = window.location.pathname.split('/')[2];
+
+let isIntersecting;
+
+// Create a new Intersection Observer
+const observer = new IntersectionObserver(
+  function (entries, observer) {
+    entries.forEach((entry) => {
+      // console.log(entry.isIntersecting);
+      isIntersecting = entry.isIntersecting;
+      if (isIntersecting) {
+        unreadMessages.textContent = 0;
+      }
+    });
+  },
+  {
+    root: null,
+    threshold: 0,
+  }
+);
+
+// Observer the last child
+observer.observe(messageList.lastElementChild);
 
 rooms.forEach((room) => {
   if (room.dataset.url === roomid) {
@@ -86,8 +111,8 @@ const createChatMessage = ({ username, message }) => {
   message = message.escape();
   ele.innerHTML = `<strong style="color: purple; font-size: 18px" class="message-user" >${username}</strong>
     <i style="font-size: 14px; color: rgba(0, 0, 0, 0.75);">${formatTime(
-    date.toISOString()
-  )}</i>
+      date.toISOString()
+    )}</i>
     <p>${message}</p>
   `;
   return ele;
@@ -95,9 +120,18 @@ const createChatMessage = ({ username, message }) => {
 
 socket.on('message', (data) => {
   // When anyone recieves a message
+
+  // observer.unobserve(messageList.lastElementChild);
   messageList.appendChild(createChatMessage(data));
   // TODO: Add an observable to last one
-  // chatScreen.scrollTo(0, chatScreen.scrollHeight);
+  observer.observe(messageList.lastElementChild);
+
+  if (isIntersecting) {
+    messageList.scrollTo(0, messageList.scrollHeight);
+    observer.observe(messageList.lastElementChild);
+  } else {
+    unreadMessages.textContent = parseInt(unreadMessages.textContent, 10) + 1;
+  }
 });
 
 socket.on('typing', (data) => {
@@ -177,4 +211,8 @@ showUserBtn.onclick = async () => {
 
 modelWrapper.onclick = () => {
   modelWrapper.classList.remove('model-active');
+};
+
+unreadMessages.onclick = () => {
+  messageList.scrollTo(0, messageList.scrollHeight);
 };

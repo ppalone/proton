@@ -278,6 +278,7 @@ ul {
 }
 
 .chat__messages {
+  /* position: relative; */
   flex: 2;
   max-height: max-content;
   overflow-y: scroll;
@@ -297,6 +298,21 @@ ul {
 
 .message {
   animation: fly-in 250ms ease-in-out;
+}
+
+.unread__messages {
+  cursor: pointer;
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--special);
+  color: var(--bg-primary);
 }
 
 .chat__typing {
