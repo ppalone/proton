@@ -264,6 +264,10 @@ ul {
   border-bottom: 1px solid var(--text-secondary);
 }
 
+.chat__header h2 {
+  padding-top: 4px;
+}
+
 .chat__header button {
   min-width: auto;
   margin-right: 5px;
@@ -287,7 +291,8 @@ ul {
 }
 
 .chat__messages > li {
-  padding: 5px 0;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(200, 200, 200, 0.75);
 }
 
 .message {

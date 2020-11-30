@@ -1,7 +1,4 @@
-// const User = require('../models/Room');
 const Message = require('../models/Message');
-
-let typingUser = '';
 
 const wrap = (middleware) => (socket, next) =>
   middleware(socket.request, {}, next);
@@ -25,7 +22,7 @@ module.exports = (io, sessionMiddleware, passport) => {
   // Socket Handling
   io.on('connection', async (socket) => {
     socket.on('join', async (room) => {
-      // Subscribe user to the roo,
+      // Subscribe user to the room
       socket.join(room);
       // Send back user the username
       socket.emit('join', {

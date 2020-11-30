@@ -84,10 +84,10 @@ const createChatMessage = ({ username, message }) => {
   let ele = document.createElement('li');
   ele.className = 'message';
   message = message.escape();
-  ele.innerHTML = `<strong style="color: purple; font-size: 18px">${username}</strong>
+  ele.innerHTML = `<strong style="color: purple; font-size: 18px" class="message-user" >${username}</strong>
     <i style="font-size: 14px; color: rgba(0, 0, 0, 0.75);">${formatTime(
-      date.toISOString()
-    )}</i>
+    date.toISOString()
+  )}</i>
     <p>${message}</p>
   `;
   return ele;
@@ -101,7 +101,9 @@ socket.on('message', (data) => {
 });
 
 socket.on('typing', (data) => {
-  document.querySelector('.chat__typing').innerHTML = `${data.username} is typing . . .`
+  document.querySelector(
+    '.chat__typing'
+  ).innerHTML = `${data.username} is typing . . .`;
 });
 
 socket.on('stoptyping', () => {
@@ -115,12 +117,12 @@ closeIcon.addEventListener('click', closeSideabar);
 
 chatInput.addEventListener('focus', () => {
   // console.log('Typing!');
-  socket.emit('typing', { room: roomid })
+  socket.emit('typing', { room: roomid });
 });
 
 chatInput.addEventListener('blur', () => {
   // console.log('Not Typing!');
-  socket.emit('stoptyping', { room: roomid, user: currentUser })
+  socket.emit('stoptyping', { room: roomid, user: currentUser });
 });
 
 chatForm.onsubmit = (e) => {
@@ -148,6 +150,7 @@ chatForm.onsubmit = (e) => {
   messageList.appendChild(createChatMessage(messageData));
 
   chatInput.value = '';
+  // chatInput.blur();
   messageList.scrollTo(0, messageList.scrollHeight);
   return false;
 };
