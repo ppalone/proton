@@ -37,8 +37,11 @@ const observer = new IntersectionObserver(
   }
 );
 
-// Observer the last child
-observer.observe(messageList.lastElementChild);
+// Observer the last child of messagesList
+// Only if it exists
+if (messageList.lastElementChild) {
+  observer.observe(messageList.lastElementChild);
+}
 
 rooms.forEach((room) => {
   if (room.dataset.url === roomid) {
