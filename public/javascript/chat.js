@@ -14,7 +14,6 @@ const sidebar = document.querySelector('.sidebar');
 const hamburgerIcon = document.querySelector('.hamburger__icon');
 const closeIcon = document.querySelector('.close__icon');
 const rooms = document.querySelectorAll('.sidebar__rooms > ul > li');
-const unreadMessages = document.querySelector('.unread__messages');
 
 // console.log(unreadMessages);
 
@@ -29,11 +28,7 @@ let isIntersecting;
 const observer = new IntersectionObserver(
   function (entries, observer) {
     entries.forEach((entry) => {
-      // console.log(entry.isIntersecting);
       isIntersecting = entry.isIntersecting;
-      if (isIntersecting) {
-        unreadMessages.textContent = 0;
-      }
     });
   },
   {
@@ -129,8 +124,6 @@ socket.on('message', (data) => {
   if (isIntersecting) {
     messageList.scrollTo(0, messageList.scrollHeight);
     observer.observe(messageList.lastElementChild);
-  } else {
-    unreadMessages.textContent = parseInt(unreadMessages.textContent, 10) + 1;
   }
 });
 
@@ -184,7 +177,10 @@ chatForm.onsubmit = (e) => {
   messageList.appendChild(createChatMessage(messageData));
 
   chatInput.value = '';
-  // chatInput.blur();
+
+  // Remove focus so stop typing event is triggered
+  chatInput.blur();
+
   messageList.scrollTo(0, messageList.scrollHeight);
   return false;
 };
@@ -211,8 +207,4 @@ showUserBtn.onclick = async () => {
 
 modelWrapper.onclick = () => {
   modelWrapper.classList.remove('model-active');
-};
-
-unreadMessages.onclick = () => {
-  messageList.scrollTo(0, messageList.scrollHeight);
 };
